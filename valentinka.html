@@ -1,0 +1,287 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day Game</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+           
+            justify-content: center;
+            align-items: center;
+            background-image: url('background-image.webp');
+            background-size: cover;
+            background-position: center;
+            font-family: 'Pixel', Arial, sans-serif;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 20px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: white;
+            text-shadow: 2px 2px 0px #000;
+            position: relative;
+            z-index: 2;
+        }
+        .hidden {
+            display: none;
+        }
+        .pixel-text {
+            font-family: 'Pixel', Arial, sans-serif;
+            font-size: 24px;
+            color: white;
+            text-shadow: 2px 2px 0px #000;
+            margin: 10px 0;
+            position: relative;
+            z-index: 2;
+        }
+        .choice-box {
+            border: 2px solid white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            margin-top: 20px;
+        }
+
+        /* Анимация для сердца */
+        @keyframes floatHeart {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        .heart-animation {
+            animation: floatHeart 2s ease-in-out infinite;
+            width: 150px;
+            margin-bottom: 20px;
+           margin-left: 120px;
+        }
+
+        /* Анимация падающих сердечек и цветочков */
+        @keyframes falling {
+            0% {
+                transform: translateY(-100%);
+            }
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+        .heart, .flower {
+            position: absolute;
+            top: -50px;
+            font-size: 20px;
+            animation: falling 5s linear infinite;
+            z-index: 1;
+        }
+        .heart {
+            color: pink;
+        }
+        .flower {
+            color: lightgreen;
+        }
+        .hearts-bg, .flowers-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        /* Стили для экрана с планом */
+        .plan-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 400px;
+            margin: 10px 0;
+        }
+        .plan-item img {
+            margin: 0;
+            width: 50px;
+        }
+
+        @media (max-width: 600px) {
+            .pixel-text {
+                font-size: 18px;
+            }
+            button {
+                font-size: 16px;
+                padding: 8px 16px;
+            }
+            img {
+                max-width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Начальный экран -->
+        <div id="screen1">
+            <img src="сердце1-0.png" alt="Heart" class="heart-animation" style="width: 190px; bottom: 300px;  right: 1000px;">
+            <button onclick="showValentineQuestion() "style="width: 100px; position: top; bottom:30px; left: -160px;">Click</button>
+        </div>
+
+<!-- Экран с вопросом -->
+<div id="screen2" class="hidden">
+    <div class="hearts-bg">
+        <!-- Падающие сердечки -->
+        <div class="heart" style="left: 0%; animation-delay: 0s;">❤️</div>
+<div class="heart" style="left: 2%; animation-delay: 1s;">❤️</div>
+<div class="heart" style="left: 3%; animation-delay: 2s;">❤️</div>
+<div class="heart" style="left: 4%; animation-delay: 3s;">❤️</div>
+<div class="heart" style="left: 5%; animation-delay: 4s;">❤️</div>
+<div class="heart" style="left: 6%; animation-delay: 5s;">❤️</div>
+<div class="heart" style="left: 7%; animation-delay: 6s;">❤️</div>
+<div class="heart" style="left: 8%; animation-delay: 7s;">❤️</div>
+<div class="heart" style="left: 9%; animation-delay: 8s;">❤️</div>
+<div class="heart" style="left: 12%; animation-delay: 9s;">❤️</div>
+<div class="heart" style="left: 15%; animation-delay: 10s;">❤️</div>
+<div class="heart" style="left: 13%; animation-delay: 11s;">❤️</div>
+    </div>
+
+           
+            <p class="pixel-text choice-box">Will you be my valentine?</p>
+            <button onclick="chooseYes()">Yes</button>
+            <button onclick="chooseNo()">No</button>
+        </div>
+<!-- Экран с грустным изображением -->
+<div id="screen3" class="hidden">
+    <img src="игорь грустный.png" alt="Sad Him" style="width: 200px;">
+    <p class="pixel-text choice-box">No problem! We'll work on your taste!</p>
+    <button onclick="tryAgain()">Try Again</button>
+</div>
+        <!-- Экран с вами и Игорем -->
+        <div id="screen5" class="hidden">
+            <div class="flowers-bg">
+                <!-- Падающие цветочки -->
+                <div class="heart" style="left: 0%; animation-delay: 0s;">🌸</div>
+                <div class="heart" style="left: 2%; animation-delay: 1s;">🌸</div>
+                <div class="heart" style="left: 3%; animation-delay: 2s;">🌸</div>
+                <div class="heart" style="left: 4%; animation-delay: 3s;">🌸</div>
+                <div class="heart" style="left: 5%; animation-delay: 4s;">🌸</div>
+                <div class="heart" style="left: 6%; animation-delay: 5s;">🌸</div>
+                <div class="heart" style="left: 7%; animation-delay: 6s;">🌸</div>
+                <div class="heart" style="left: 8%; animation-delay: 7s;">🌸</div>
+                <div class="heart" style="left: 9%; animation-delay: 8s;">🌸</div>
+                <div class="heart" style="left: 12%; animation-delay: 9s;">🌸</div>
+                <div class="heart" style="left: 15%; animation-delay: 10s;">🌸</div>
+                <div class="heart" style="left: 13%; animation-delay: 11s;">🌸</div>
+            </div>
+            <img src="игорь улыбается.png" alt="Me" style="width: 150px; position: absolute; left: 48%;">
+            <img src="я.png" alt="Happy Him" style="width: 150px; position: top; right: 0%;">
+            <button onclick="showDatePlan()" style="width: 120px; position: top; bottom: -10px;left: -90px;">Next</button>
+        </div>
+
+        <!-- Экран с планом свидания -->
+        <div id="screen6" class="hidden">
+            <p class="pixel-text">Our Plan:</p>
+            <div class="plan-item">
+                <p class="pixel-text">17:00 Restaurant</p>
+                <img src="блюдо.png" alt="Food">
+            </div>
+            <div class="plan-item">
+                <p class="pixel-text">19:00 Cinema</p>
+                <img src="кино.png" alt="Cinema">
+            </div>
+            <div class="plan-item">
+                <p class="pixel-text">22:00 Wine and Snacks</p>
+                <img src="бокал.png" alt="Wine">
+            </div>
+        </div>
+
+<!-- Финальный экран -->
+        <div id="screen7" class="hidden">
+            <div class="hearts-bg">
+                <!-- Падающие сердечки -->
+                <div class="heart" style="left: 0%; animation-delay: 0s;">❤️</div>
+                <div class="heart" style="left: 2%; animation-delay: 1s;">❤️</div>
+                <div class="heart" style="left: 3%; animation-delay: 2s;">❤️</div>
+                <div class="heart" style="left: 4%; animation-delay: 3s;">❤️</div>
+                <div class="heart" style="left: 5%; animation-delay: 4s;">❤️</div>
+                <div class="heart" style="left: 6%; animation-delay: 5s;">❤️</div>
+                <div class="heart" style="left: 7%; animation-delay: 6s;">❤️</div>
+                <div class="heart" style="left: 8%; animation-delay: 7s;">❤️</div>
+                <div class="heart" style="left: 9%; animation-delay: 8s;">❤️</div>
+                <div class="heart" style="left: 12%; animation-delay: 9s;">❤️</div>
+                <div class="heart" style="left: 15%; animation-delay: 10s;">❤️</div>
+                <div class="heart" style="left: 13%; animation-delay: 11s;">❤️</div>
+            </div>
+            <img src="я.png" alt="Me" style="width: 150px; position: top; right: 0%;">
+            <img src="игорь улыбается.png" alt="Happy Him" style="width: 150px; position: top; left: 48px;">
+            <p class="pixel-text choice-box" style="bottom:40px">Happy Valentine's Day!</p>
+        </div>
+    </div>
+
+    <script>
+        let noCount = 0;
+
+        function showValentineQuestion() {
+            document.getElementById('screen1').classList.add('hidden');
+            document.getElementById('screen2').classList.remove('hidden');
+        }
+
+        function chooseYes() {
+            document.getElementById('screen2').classList.add('hidden');
+            document.getElementById('screen5').classList.remove('hidden');
+        }
+
+        function chooseNo() {
+            noCount++;
+            if (noCount === 2) {
+                document.getElementById('screen2').classList.add('hidden');
+                document.getElementById('screen8').classList.remove('hidden');
+            } else {
+                document.getElementById('screen2').classList.add('hidden');
+                document.getElementById('screen3').classList.remove('hidden');
+            }
+        }
+
+        function tryAgain() {
+            document.getElementById('screen3').classList.add('hidden');
+            document.getElementById('screen2').classList.remove('hidden');
+        }
+
+        function showUsTogether() {
+            document.getElementById('screen4').classList.add('hidden');
+            document.getElementById('screen5').classList.remove('hidden');
+        }
+
+        function showDatePlan() {
+            document.getElementById('screen5').classList.add('hidden');
+            document.getElementById('screen6').classList.remove('hidden');
+            setTimeout(function() {
+                document.getElementById('screen6').classList.add('hidden');
+                document.getElementById('screen7').classList.remove('hidden');
+            }, 5000);
+        }
+        
+    </script>
+</body>
+</html>
